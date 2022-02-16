@@ -1,29 +1,27 @@
-@ignore
+@debug
 Feature: Articles
 
   Background: Define URL
     Given url apiUrl
 
-  Scenario: Create a new article
-    Given path 'articles'
-    And request {"article": {"tagList": [],"title": "Articles-12343","description": "des","body": "body"}}
-    When method Post
-    Then status 200
-    And match response.article.title == 'Articles-12343'
+  Scenario: Create a new article successfully
+    * def createdArticle = call read('classpath:helpers/AddArticle.feature')
+    * def createdTitle = createdArticle.titleArticleRes
+    * def randomTitle = createdArticle.randomTitle
+    And match createdTitle == randomTitle
 
-  Scenario: Create and Delete a scenario
-    Given path 'articles'
-    And request {"article": {"tagList": [],"title": "Articles-Deleted","description": "des","body": "body"}}
-    When method Post
-    Then status 200
-    And match response.article.title == 'Articles-Deleted'
-    * def articleId = response.article.slug
+  Scenario: Create and Delete a article successfully
+    * def createdArticle = call read('classpath:helpers/AddArticle.feature')
+    * def createdTitle = createdArticle.titleArticleRes
+    * def articleId = createdArticle.slugArticleRes
+    * def randomTitle = createdArticle.randomTitle
+    And match createdTitle == randomTitle
 
     Given params {limit: 10, offset: 0}
     Given path 'articles'
     When method Get
     Then status 200
-    And match response.articles[0].title == 'Articles-Deleted'
+    And match response.articles[0].title == '#(randomTitle)'
 
     Given path 'articles',articleId
     When method Delete
@@ -33,6 +31,6 @@ Feature: Articles
     Given path 'articles'
     When method Get
     Then status 200
-    And match response.articles[0].title != 'Articles-Deleted'
+    And match response.articles[0].title != '#(randomTitle)'
 
 

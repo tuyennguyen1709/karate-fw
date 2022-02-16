@@ -20,12 +20,12 @@ Feature: Tests for the home page
     Given path 'articles'
     When method Get
     Then status 200
-    And match response.articles == '#[6]'
-    And match response.articlesCount == 6
+    And match response.articles == '#[3]'
+    And match response.articlesCount == 3
     And match response.articlesCount != 5
-    And match response == {"articles": "#array", "articlesCount": 6}
-    And match response.articles[0].createdAt contains '2022'
-    And match response.articles[*].favoritesCount contains 842
+    And match response == {"articles": "#array", "articlesCount": 3}
+    And match response.articles[0].createdAt contains '2021'
+    And match response.articles[*].favoritesCount contains 474
     And match response..bio contains null
     And match each response..following == false
     And match each response..following == '#boolean'
