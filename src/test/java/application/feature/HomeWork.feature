@@ -5,8 +5,6 @@ Feature: Validate favorite and comment function
     * url apiUrl
     * def isTimeValidator = read('classpath:helpers/TimeValidator.js')
     * def dataGenerator = Java.type('helpers.DataGenerator')
-    * configure afterScenario = function(){ karate.write({ id: testId, errorMessage: karate.info.errorMessage }, 'test-id-' + testId + '.json'); }
-    * configure afterScenario = karate.configure('afterScenario', function(){ karate.log('after scenario') });
 
   Scenario: Favorite articles
         # Step 1: Add new article (optimize here - Create a AddArticle.feature)
@@ -75,7 +73,7 @@ Feature: Validate favorite and comment function
                 "username": '#string',
                 "bio": ##string,
                 "image": '#string',
-                "following": '#boolean',
+                "following": '#boolean'
             },
             "favoritesCount": '#number',
             "favorited": '#boolean'
